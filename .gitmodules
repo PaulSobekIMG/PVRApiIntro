@@ -1,0 +1,10 @@
+[submodule "Dependencies/Native_SDK"]
+	path = Dependencies/Native_SDK
+	url = https://github.com/PaulSobekIMG/Native_SDK.git
+[submodule "Dependencies/android-cmake"]
+	path = Dependencies/android-cmake
+	url = https://github.com/chenxiaolong/android-cmake.git
+	branch = mbp
+[submodule "Dependencies/ios-cmake"]
+	path = Dependencies/ios-cmake
+	url = https://github.com/cristeab/ios-cmake.git

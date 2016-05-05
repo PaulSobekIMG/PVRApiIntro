@@ -1,0 +1,2 @@
+key.store=${ANDROID_KEYSTORE}
+key.alias=${ANDROID_KEYSTORE_ALIAS}
