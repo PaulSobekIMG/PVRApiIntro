@@ -10,6 +10,7 @@ The CMake files also provide a useful base for writing new cross-platform cross-
 ##Fetch instructions
 ```
 git clone https://github.com/PaulSobekIMG/PVRApiIntro.git
+cd PVRApiIntro
 git submodule init
 git submodule update
 ```
