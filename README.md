@@ -7,7 +7,6 @@ A set of examples introducing the PowerVR Framework including CMake files to tar
 The CMake files also provide a useful base for writing new cross-platform cross-api applications.
 
 
-
 ##Fetch instructions
 ```
 git clone https://github.com/PaulSobekIMG/PVRApiIntro.git
@@ -79,3 +78,5 @@ iOS requires the following changes to the project to build
 1. Set build target to your device and select the project to build (not ALL_BUILD)
 2. Go to build settings for the target project (not ALL_BUILD)
 3. Set code signing identity to iOS developer
+4. Build and Run!
+
