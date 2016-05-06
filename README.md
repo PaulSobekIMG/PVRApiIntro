@@ -2,7 +2,7 @@
  
 ![](README.png)
 
-A set of examples introducing the PowerVR Framework including CMake files to target Windows, Linux, Android, iOS and OSX - both for Vulkan and OpenGL ES with one source file.
+A set of examples introducing the PowerVR Framework including CMake files to target Windows, Linux, Android, iOS and OS X - both for Vulkan and OpenGL ES with one source file.
 
 The CMake files also provide a useful base for writing new cross-platform cross-api applications.
 
@@ -19,7 +19,7 @@ git submodule update
 
 Pass ```-DAPI=OGLES|Vulkan``` to CMake to choose between Vulkan and OpenGL ES back ends
 
-Windows, Linux and OSX OpenGL ES builds require the PowerVR VFrame libraries - [https://community.imgtec.com/developers/powervr/tools/pvrvframe/](https://community.imgtec.com/developers/powervr/tools/pvrvframe/ "PowerVR VFrame").
+Windows, Linux and OS X OpenGL ES builds require the PowerVR VFrame libraries - [https://community.imgtec.com/developers/powervr/tools/pvrvframe/](https://community.imgtec.com/developers/powervr/tools/pvrvframe/ "PowerVR VFrame")
 
 ###Linux
 ```
@@ -33,9 +33,26 @@ LD_LIBRARY_PATH=/path/to/PVRVFrame/Linux_x86_32/ ./Intro1ClearApi
 cmake -DAPI=OGLES /path/to/PVRApiIntro/Intro1ClearApi/
 cmake --build .
 ```
-Running OpenGL ES the application requires the PVRVFrame libraries to either be on your PATH environment variable or to be copied into the binary directory. 
+When building for OpenGL ES the application requires the PVRVFrame libraries to be on your PATH or be copied into the binary directory. 
 
-###OSX
+###OS X
+
+OS X requires the PowerVR VFrame libraries to be part of the application bundle. The build will package all libraries placed in ```/Dependencies/osx/Bundle/Frameworks``` into the application. 
+
+Before running CMake place
+
+```
+libEGL.dylib
+libGLESv1_CM.dylib
+libGLESv2.dylib
+```
+into
+```
+Dependencies/osx/Bundle/Frameworks
+```
+
+Then to build the application: 
+
 ```
 cmake -DAPI=OGLES /path/to/PVRApiIntro/Intro1ClearApi/
 cmake --build .
