@@ -19,7 +19,7 @@ pvr::Result::Enum OGLESIntroducingPVRApi::initView() {
 
 	onscreenFB = getGraphicsContext()->createOnScreenFboSet();
 
-	for (int i = 0 ; i < getGraphicsContext()->getPlatformContext().getSwapChainLength(); i++){
+	for (int i = 0 ; i < getSwapChainLength(); i++){
 		onscreenCBArray.add(getGraphicsContext()->createCommandBufferOnDefaultPool());
 
 		auto & cb = onscreenCBArray[i];
@@ -39,7 +39,7 @@ pvr::Result::Enum OGLESIntroducingPVRApi::initView() {
 
 pvr::Result::Enum OGLESIntroducingPVRApi::renderFrame(){
 
-	onscreenCBArray[getGraphicsContext()->getPlatformContext().getSwapChainIndex()]->submit();
+	onscreenCBArray[getSwapChainIndex()]->submit();
 
 	return pvr::Result::Success;
 }
