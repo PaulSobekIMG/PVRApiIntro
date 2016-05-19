@@ -17,9 +17,13 @@ git submodule update
 
 ## Build Instructions
 
-Pass ```-DAPI=OGLES|Vulkan``` to CMake to choose between Vulkan and OpenGL ES back ends
+Specify ```-DAPI=OGLES``` or ```-DAPI=Vulkan``` to CMake to choose between Vulkan and OpenGL ES back ends
 
 Windows, Linux and OS X OpenGL ES builds require the PowerVR VFrame libraries - [https://community.imgtec.com/developers/powervr/tools/pvrvframe/](https://community.imgtec.com/developers/powervr/tools/pvrvframe/ "PowerVR VFrame")
+
+Vulkan builds require [glslang](https://github.com/KhronosGroup/glslang) to generate SPIR-V binaries. The path of glslangValidator must be passed to CMake by specifying:
+
+``` -DGLSLANG_EXECUTABLE="path/to/glslangValidator" ```
 
 ### Linux
 
