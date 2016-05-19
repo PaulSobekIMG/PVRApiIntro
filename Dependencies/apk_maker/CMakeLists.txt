@@ -12,6 +12,13 @@ elseif(NOT CMAKE_BUILD_TYPE )
    set( CMAKE_BUILD_TYPE "Debug" CACHE PATH "Build Type to use when building the project. Only Debug and Release are Supported" FORCE)
 endif()
 
+   set( CMAKE_BUILD_TYPE "Debug" CACHE PATH "Build Type to use when building the project. Only Debug and Release are Supported" FORCE)
+
+if(${API} MATCHES "OGLES")
+	set(GLSLANG_EXECUTABLE "NULL")
+endif()
+
+
 # Find the Source Directory. 
 find_path(DEMO_SRC_DIR "CMakeLists.txt"
           PATHS "${CMAKE_BINARY_DIR}/../../"
@@ -253,6 +260,7 @@ foreach(ABI ${ANDROID_ABIS})
             CMAKE_ARGS
                 -DCMAKE_TOOLCHAIN_FILE=${ANDROID_TOOLCHAIN_FILE}
 				-DAPI=${API}
+				-DGLSLANG_EXECUTABLE=${GLSLANG_EXECUTABLE}
                 -DANDROID_NDK=${ANDROID_NDK}
                 -DANDROID_ABI=${ABI}
                 -DANDROID_STL=c++_static
