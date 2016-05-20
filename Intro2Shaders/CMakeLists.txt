@@ -25,15 +25,15 @@ set(SINGLE_SOURCE_SHADERS shader.frag shader.vert)
 # API specific shaders
 
 # VULKAN_SHADERS are compiled using glslangValidator by the build
-set(VULKAN_SHADERS shader.spirv.frag)
+#set(VULKAN_SHADERS shader.spirv.frag)
 
 # OPENGLES_SHADERS are copied straight to the target
-set(OPENGLES_SHADERS shader.vsh)
+#set(OPENGLES_SHADERS shader.vsh)
 
 # Assets
 
 # ASSETS are copied straight to the target
-set(ASSETS asset.txt)
+#set(ASSETS asset.txt)
 
 # Platform specific build and install boilerplate for Windows, Linux, iOS, OSX and Android.
 platform_specific_build_and_install()
