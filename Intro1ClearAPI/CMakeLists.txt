@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.0)
 include(../Dependencies/Helper.cmake)
 
 # Determine project name from directory - this is required for our android apk builder

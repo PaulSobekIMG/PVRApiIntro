@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.0)
 
 # This cmake script converts between glsl <-> Vulkan it assume a target of glsl 300 - change as appropriate 
 file(STRINGS ${shader_file} contents)
