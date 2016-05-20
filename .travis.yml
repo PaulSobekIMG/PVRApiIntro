@@ -13,3 +13,4 @@ matrix:
          packages: ['g++-4.8']
       env: COMPILER='ccache g++-4.8'
     - os: osx
+      osx_image: xcode7.3
