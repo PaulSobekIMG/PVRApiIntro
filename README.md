@@ -7,6 +7,8 @@ A set of examples introducing the PowerVR Framework including CMake files to tar
 The CMake files also provide a useful base for writing new cross-platform cross-api applications.
 
 
+![Build status](https://travis-ci.org/PaulSobekIMG/PVRApiIntro.svg?branch=master)
+
 ## Fetch instructions
 ```
 git clone https://github.com/PaulSobekIMG/PVRApiIntro.git
