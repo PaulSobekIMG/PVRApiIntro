@@ -40,7 +40,7 @@ function(platform_specific_build_and_install)
 		FOREACH(shader ${OPENGLES_SHADERS})
 			set(ASSET_TARGETS ${ASSET_TARGETS} ${CMAKE_BINARY_DIR}/${shader})	
 			add_custom_command(OUTPUT ${shader} 
-				COMMAND ${CMAKE_COMMAND} -E -copy_if_different ${CMAKE_CURRENT_LIST_DIR}/${shader} ${CMAKE_BINARY_DIR}/${shader} DEPENDS ${CMAKE_CURRENT_LIST_DIR}/${shader})
+				COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_LIST_DIR}/${shader} ${CMAKE_BINARY_DIR}/${shader} DEPENDS ${CMAKE_CURRENT_LIST_DIR}/${shader})
 		ENDFOREACH()
 	endif()
 	

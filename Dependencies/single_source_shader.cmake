@@ -35,7 +35,7 @@ else()
 	if (${firstLine} MATCHES "#version 450.*")
 	# Convert on-the-fly to destination
 		
-		message("Warning - this shader is being converted to OGLES by chaning the version string to #version 300 es")
+		message("Warning - this shader is being converted to OGLES by changing the version string to #version 300 es")
 		
 		FILE(WRITE ${target} "#version 300 es\n")
 		
@@ -46,7 +46,7 @@ else()
 		ENDFOREACH(line)
 	else()
 		# No conversion required
-		execute_process(COMMAND ${CMAKE_COMMAND} -E copy ${shader_file} ${target})	
+		execute_process(COMMAND ${CMAKE_COMMAND} -E copy_if_different ${shader_file} ${target})	
 	endif()
 
 endif()
