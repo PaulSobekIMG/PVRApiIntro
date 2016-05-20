@@ -1,5 +1,5 @@
 language: cpp
-script:  find . -maxdepth 1 -type d | grep -v Dependencies | grep -v git | grep -v "^\.$" | grep -v "test" | xargs -L 1 -I{} bash -c "mkdir -p ~/test/{} && cd ~/test/{} && cmake -DAPI=OGLES $PWD/{} && cmake --build . "
+script:  git submodule init &&  git submodule update && find . -maxdepth 1 -type d | grep -v Dependencies | grep -v git | grep -v "^\.$" | grep -v "test" | xargs -L 1 -I{} bash -c "mkdir -p ~/test/{} && cd ~/test/{} && cmake -DAPI=OGLES $PWD/{} && cmake --build . "
 compiler:
   - clang
   - gcc
