@@ -101,16 +101,23 @@ pvr::Result::Enum OGLESIntroducingPVRApi::initView() {
 	opaquePipeParameters.inputAssembler.setPrimitiveTopology(pvr::types::PrimitiveTopology::TriangleList);
 
 
-	// Set up shaders for our pipeline 
+	/* Set up shaders for our pipeline 
+	
+	Vulkan: Build system automatically compiles shader to spir-v binary for us on Vulkan
+		as the shader is marked 'single source' in the build it is forced to version 450 when 
+		compiled.
 
-	// Build system automatically compiles shader to spir-v binary for us on Vulkan
+	OpenGL ES: We pass the API type to createShader - the shader version is replaced with API 
+		GL ES version. By using "#if __VERSION__ == 200" we can create shaders that target each
+		API version with a single source file. */
+
 	pvr::api::Shader vert = gc->createShader(
 		*getAssetStream("shader.vert"),
-		pvr::types::ShaderType::VertexShader);
+		pvr::types::ShaderType::VertexShader, 0, 0, gc->getApiType());
 
 	pvr::api::Shader frag = gc->createShader(
 		*getAssetStream("shader.frag"),
-		pvr::types::ShaderType::FragmentShader);
+		pvr::types::ShaderType::FragmentShader, 0,0, gc->getApiType());
 
 	opaquePipeParameters.fragmentShader.setShader(frag);
 	opaquePipeParameters.vertexShader.setShader(vert);
@@ -118,7 +125,7 @@ pvr::Result::Enum OGLESIntroducingPVRApi::initView() {
 	pvr::api::DescriptorSet uboDescriptorSet;
 
 	// Set up our uniform for rotating the triangle - we use a different path for pre ES 3.1 by checking getApiType() for Vulkan
-	if (pvr::Api::Enum::Vulkan == gc->getApiType()) {
+	if (pvr::Api::Enum::Vulkan == gc->getApiType() || pvr::Api::Enum::OpenGLES31 == gc->getApiType()) {
 
 		// Create a UBO
 		rotateUbo = gc->createBufferAndView(4, pvr::types::BufferBindingUse::UniformBuffer);
@@ -156,9 +163,8 @@ pvr::Result::Enum OGLESIntroducingPVRApi::initView() {
 	// For pre ES3.1 we now have linked shaders so can call getUniformLocation to set up the rotate uniform
 	int rotateLoc = 0;
 
-	if (!(gc->getApiType() == pvr::Api::Enum::Vulkan)) {
+	if (!(pvr::Api::Enum::Vulkan == gc->getApiType() || pvr::Api::Enum::OpenGLES31 == gc->getApiType())) {
 		rotateLoc = opaquePipeline->getUniformLocation("rotate");
-		
 	}
 	
 
@@ -178,11 +184,13 @@ pvr::Result::Enum OGLESIntroducingPVRApi::initView() {
 			// Bind the pipeline object
 			cb->bindPipeline(opaquePipeline);
 
-			// Update our uniform for Vulkan and ES 2.0/3.0/3.1 paths
-			if (gc->getApiType() == pvr::Api::Enum::Vulkan) {
+			
+			if (pvr::Api::Enum::Vulkan == gc->getApiType() || pvr::Api::Enum::OpenGLES31 == gc->getApiType()) {
+				// Update our uniform for Vulkan/ES 3.1
 				cb->bindDescriptorSet(opaquePipeline->getPipelineLayout(), 0, uboDescriptorSet);
 			}else{
-				// This function will poll the pointed to memory to set the uniform for each draw
+				/* Update our uniform for ES 2.0 / 3.0 path
+				This function will poll the pointed to memory to set the uniform for each draw */
 				cb->setUniformPtr(rotateLoc, 1, &rotateValue);
 			}
 			
@@ -201,11 +209,11 @@ pvr::Result::Enum OGLESIntroducingPVRApi::initView() {
 
 pvr::Result::Enum OGLESIntroducingPVRApi::renderFrame() {
 
-	// ES 2.0+ uniform will automatically be polled - we just change the underlying memory
+	// ES 2.0/3.0 uniform will automatically be polled - we just change the underlying memory
 	rotateValue += 0.03;
 
-	// For Vulkan UBO we update the buffer 
-	if (pvr::Api::Enum::Vulkan == gc->getApiType()) {
+	// For Vulkan/ES3.1 UBO we update the buffer 
+	if (pvr::Api::Enum::Vulkan == gc->getApiType() || pvr::Api::Enum::OpenGLES31 == gc->getApiType()) {
 		rotateUbo->update(&rotateValue, 0, 4);
 	}
 

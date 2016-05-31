@@ -3,9 +3,10 @@
 
 layout (location = 0) in highp vec3    inVertex;
 
-#ifdef VULKAN
-	layout (std140, set=0, binding = 0) uniform u {highp float rotate;};
+#if __VERSION__ > 300
+	layout (std140, binding = 0) uniform u {highp float rotate;};
 #else
+
 	uniform highp float rotate;
 #endif
 
@@ -24,5 +25,10 @@ mat4 rotationMatrix(vec3 axis, float angle)
 
 void main()
 {
-        gl_Position = rotationMatrix(vec3(0.0,0.0,1.0), rotate)*vec4(inVertex.xyz,1.0);    
+#if defined(VULKAN)
+        gl_Position = rotationMatrix(vec3(0.0,0.0,1.0), -rotate)*vec4(inVertex.xyz,1.0);    
+
+#else
+		gl_Position = rotationMatrix(vec3(0.0,0.0,1.0), rotate)*vec4(inVertex.xyz,1.0);    
+#endif
 }

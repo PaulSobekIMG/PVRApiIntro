@@ -3,6 +3,7 @@ set(HELPER_DIR ${CMAKE_CURRENT_LIST_DIR})
 
 function(platform_specific_build_and_install)
 	
+	
 	# Start by converting single source shaders based on build type
 	set (ASSET_TARGETS "")
 	FOREACH(shader ${SINGLE_SOURCE_SHADERS})
