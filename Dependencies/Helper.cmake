@@ -78,9 +78,9 @@ function(platform_specific_build_and_install)
 	elseif (APPLE) # iOS/OSX
 	
 		if (NOT IOS)
-			set(OSX_LAYER ${CMAKE_CURRENT_LIST_DIR}/../Dependencies/osx/Bundle/Frameworks/libGLESv2.dylib 
-				${CMAKE_CURRENT_LIST_DIR}/../Dependencies/osx/Bundle/Frameworks/libEGL.dylib 
-				${CMAKE_CURRENT_LIST_DIR}/../Dependencies/osx/Bundle/Resources/en.lproj/MainMenu.nib)
+			set(OSX_LAYER ${HELPER_DIR}/osx/Bundle/Frameworks/libGLESv2.dylib 
+				${HELPER_DIR}/osx/Bundle/Frameworks/libEGL.dylib 
+				${HELPER_DIR}/osx/Bundle/Resources/en.lproj/MainMenu.nib)
 		endif()
 			
 		add_executable (${DEMO_NAME} MACOSX_BUNDLE ${SOURCE_FILES} ${ASSET_TARGETS} ${OSX_LAYER})
@@ -89,18 +89,18 @@ function(platform_specific_build_and_install)
 		set_source_files_properties(${ASSET_TARGETS} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 		
 		if (NOT IOS)
-			set_source_files_properties(${CMAKE_CURRENT_LIST_DIR}/../Dependencies/osx/Bundle/Resources/en.lproj/MainMenu.nib PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/en.lproj")
+			set_source_files_properties(${HELPER_DIR}/osx/Bundle/Resources/en.lproj/MainMenu.nib PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/en.lproj")
 			
 			# OSX VFrame library
-			if (NOT EXISTS ${CMAKE_CURRENT_LIST_DIR}/../Dependencies/osx/Bundle/Frameworks/libEGL.dylib)
+			if (NOT EXISTS ${HELPER_DIR}/osx/Bundle/Frameworks/libEGL.dylib)
 				message(FATAL_ERROR "Missing PVRVFrame libraries for OS X - place these in Dependencies/osx/Bundle/Frameworks/")
 			endif()
-			set_source_files_properties(${CMAKE_CURRENT_LIST_DIR}/../Dependencies/osx/Bundle/Frameworks/libEGL.dylib  PROPERTIES MACOSX_PACKAGE_LOCATION "Frameworks")
+			set_source_files_properties(${HELPER_DIR}/osx/Bundle/Frameworks/libEGL.dylib  PROPERTIES MACOSX_PACKAGE_LOCATION "Frameworks")
 			
-			if (NOT EXISTS ${CMAKE_CURRENT_LIST_DIR}/../Dependencies/osx/Bundle/Frameworks/libGLESv2.dylib)
+			if (NOT EXISTS ${HELPER_DIR}/osx/Bundle/Frameworks/libGLESv2.dylib)
 				message(FATAL_ERROR "Missing PVRVFrame libraries for OS X - place these in Dependencies/osx/Bundle/Frameworks/")
 			endif()
-			set_source_files_properties(${CMAKE_CURRENT_LIST_DIR}/../Dependencies/osx/Bundle/Frameworks/libGLESv2.dylib  PROPERTIES MACOSX_PACKAGE_LOCATION "Frameworks")
+			set_source_files_properties(${HELPER_DIR}/osx/Bundle/Frameworks/libGLESv2.dylib  PROPERTIES MACOSX_PACKAGE_LOCATION "Frameworks")
 		endif()
 		
 		target_link_libraries (${DEMO_NAME} ${FRAMEWORK_LINK_LIBS})
@@ -108,9 +108,9 @@ function(platform_specific_build_and_install)
 		set_target_properties(${DEMO_NAME} PROPERTIES COMPILE_FLAGS "-std=c++11")
 		
 		if (IOS)
-			set_target_properties(${DEMO_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_LIST_DIR}/../Dependencies/ios/ios.plist)
+			set_target_properties(${DEMO_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${HELPER_DIR}/ios/ios.plist)
 		else()
-			set_target_properties(${DEMO_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_LIST_DIR}/../Dependencies/osx/osxplist.info)
+			set_target_properties(${DEMO_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${HELPER_DIR}/osx/osxplist.info)
 		endif()
 	else()
 		# Windows/Linux build
@@ -126,6 +126,6 @@ function(platform_specific_build_and_install)
 			DESTINATION Assets)
 	endif()
 	
-	target_include_directories(${DEMO_NAME} PRIVATE ${CMAKE_CURRENT_LIST_DIR}/../Dependencies/Native_SDK/Framework)
+	target_include_directories(${DEMO_NAME} PRIVATE ${HELPER_DIR}/Native_SDK/Framework)
 	
 endfunction(platform_specific_build_and_install)
